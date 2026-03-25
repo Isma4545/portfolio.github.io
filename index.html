@@ -758,5 +758,25 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   }, { threshold: 0.1 });
   document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 </script>
+  <script>
+  // On écoute tous les clics sur le document
+  document.addEventListener('click', function(e) {
+    // On cherche si l'élément cliqué est un lien (<a>) ou dans un lien
+    const link = e.target.closest('a');
+    
+    if (link && typeof gtag !== 'undefined') {
+      // On envoie l'événement à Google Analytics
+      gtag('event', 'click_lien_portfolio', {
+        'event_category': 'Navigation',
+        'link_text': link.innerText.trim(), // Le texte du bouton (ex: "Voir mes projets")
+        'link_url': link.href,              // L'adresse de destination
+        'location': window.location.pathname
+      });
+      
+      // Petit log console pour que TU puisses vérifier que ça marche (F12 dans ton navigateur)
+      console.log("Trace envoyée : Clic sur " + link.innerText.trim());
+    }
+  });
+</script>
 </body>
 </html>
